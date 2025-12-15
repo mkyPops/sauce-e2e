@@ -36,6 +36,7 @@ describe("Logging In and flow", ()=>{
         login.submit() 
         cy.wait(4000)
         AddToCart.ToCart()
+        cy.wait(1000)
 
     })
 })
