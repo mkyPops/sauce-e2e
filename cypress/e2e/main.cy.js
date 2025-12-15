@@ -1,3 +1,4 @@
+import AddToCart from "../support/pages/AddToCart"
 import login from "../support/pages/login"
 import logout from "../support/pages/logout"
 import navigation from "../support/pages/navigation"
@@ -26,5 +27,15 @@ describe("Logging In and flow", ()=>{
         navigation.scroll()
         cy.wait(3000)
         logout.logOut()
+    })
+    it('Adding items to cart',()=>{
+        cy.log('we are loggig in')
+        cy.wait(2000)
+        login.logIn()
+        cy.wait(1000)
+        login.submit() 
+        cy.wait(4000)
+        AddToCart.ToCart()
+
     })
 })
