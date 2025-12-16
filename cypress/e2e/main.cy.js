@@ -43,6 +43,6 @@ describe("Logging In and flow", ()=>{
         AddToCart.pressingCart()
         cy.wait(4000)
         AddToCart.checkout()
-        
+        cy.wait(5000)
     })
 })
