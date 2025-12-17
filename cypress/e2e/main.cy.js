@@ -1,4 +1,5 @@
 import AddToCart from "../support/pages/AddToCart"
+import checkOut from "../support/pages/checkOut"
 import login from "../support/pages/login"
 import logout from "../support/pages/logout"
 import navigation from "../support/pages/navigation"
@@ -44,5 +45,7 @@ describe("Logging In and flow", ()=>{
         cy.wait(4000)
         AddToCart.checkout()
         cy.wait(5000)
+        checkOut.Continue()
+        
     })
-})
+}) 
