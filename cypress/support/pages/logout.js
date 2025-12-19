@@ -1,6 +1,8 @@
+import { LoginSelectors } from "../selectors/loginSelectors"
+
 class logout{
     logOut(){
-        cy.get('#react-burger-menu-btn').click({force:true})
+        cy.get(LoginSelectors.logOut).click({force:true})
         cy.contains('Logout').click()
     }
 }

@@ -1,20 +1,22 @@
-class AddToCart{
-    ToCart(){
-        cy.get('.btn.btn_primary.btn_small.btn_inventory ').eq(0).click()
-        cy.wait(4000)
-        cy.get('.btn.btn_primary.btn_small.btn_inventory ').eq(1).click()
-        cy.wait(4000)
-    }
-    pressingCart(){
-        cy.get('.shopping_cart_container').click()
-    }
-    continueShopping(){
-        cy.get('#continue-shopping').click()
+import { AddToCartSelectors } from "../selectors/addToCartSelectors"
 
-    }
-    checkout(){
-        cy.get('#checkout').click()
-    }
-     
+class AddToCart {
+  ToCart() {
+    cy.get(AddToCartSelectors.inventoryAddButton).eq(0).click()
+    cy.get(AddToCartSelectors.inventoryAddButton).eq(1).click()
+  }
+
+  pressingCart() {
+    cy.get(AddToCartSelectors.cartContainer).click()
+  }
+
+  continueShopping() {
+    cy.get(AddToCartSelectors.continueShoppingButton).click()
+  }
+
+  checkout() {
+    cy.get(AddToCartSelectors.checkoutButton).click()
+  }
 }
+
 export default new AddToCart
