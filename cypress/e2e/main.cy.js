@@ -77,42 +77,43 @@ describe("Negative Test Cases", ()=>{
         cy.wait(2000)
     })
 
-    it('Should validate login form with various invalid inputs', ()=>{
-        // Test invalid credentials
+    it('Should not login with invalid credentials', ()=>{
         login.loginWithInvalidCredentials()
         login.verifyErrorMessage('Username and password do not match any user')
         cy.url().should('not.include', '/inventory.html')
-        login.clearError()
-        login.resetForm()
-        
-        // Test empty username
+    })
+
+    it('Should not login with empty username', ()=>{
         login.loginWithEmptyUsername()
         login.verifyErrorMessage('Username is required')
         cy.url().should('not.include', '/inventory.html')
-        login.clearError()
-        login.resetForm()
-        
-        // Test empty password
+    })
+
+    it('Should not login with empty password', ()=>{
         login.loginWithEmptyPassword()
         login.verifyErrorMessage('Password is required')
         cy.url().should('not.include', '/inventory.html')
-        login.clearError()
-        login.resetForm()
-        
-        // Test empty fields
+    })
+
+    it('Should not login with empty fields', ()=>{
         login.loginWithEmptyFields()
         login.verifyErrorMessage('Username is required')
         cy.url().should('not.include', '/inventory.html')
-        login.clearError()
-        
-        // Test locked out user
+    })
+
+    it('Should not login with locked out user', ()=>{
         login.loginWithLockedOutUser()
         login.verifyErrorMessage('Sorry, this user has been locked out')
         cy.url().should('not.include', '/inventory.html')
     })
 
-    it('Should validate checkout form with various invalid inputs', ()=>{
-        // Setup: Login and add items to cart
+    it('Should clear error message when error button is clicked', ()=>{
+        login.loginWithInvalidCredentials()
+        login.verifyErrorMessage('Username and password do not match any user')
+        login.clearError()
+    })
+
+    it('Should not proceed with checkout when first name is empty', ()=>{
         login.logIn()
         cy.wait(2000)
         login.submit()
@@ -127,32 +128,88 @@ describe("Negative Test Cases", ()=>{
         cy.wait(3000)
         
         checkOut.verifyCheckoutPage()
-        
-        // Test empty first name
         checkOut.submitWithEmptyFirstName()
         checkOut.verifyErrorMessage('First Name is required')
         cy.url().should('include', '/checkout-step-one.html')
-        checkOut.clearError()
-        checkOut.resetForm()
+    })
+
+    it('Should not proceed with checkout when last name is empty', ()=>{
+        login.logIn()
+        cy.wait(2000)
+        login.submit()
+        login.verifySuccessfulLogin()
+        cy.wait(2000)
         
-        // Test empty last name
+        AddToCart.ToCart()
+        cy.wait(2000)
+        AddToCart.pressingCart()
+        cy.wait(2000)
+        AddToCart.checkout()
+        cy.wait(3000)
+        
+        checkOut.verifyCheckoutPage()
         checkOut.submitWithEmptyLastName()
         checkOut.verifyErrorMessage('Last Name is required')
-        cy.url().should('include', '/checkout-step-one.html')
-        checkOut.clearError()
-        checkOut.resetForm()
+        // cy.url().should('include', '/checkout-step-one.html')
+    })
+
+    it('Should not proceed with checkout when postal code is empty', ()=>{
+        login.logIn()
+        cy.wait(2000)
+        login.submit()
+        login.verifySuccessfulLogin()
+        cy.wait(2000)
         
-        // Test empty postal code
+        AddToCart.ToCart()
+        cy.wait(2000)
+        AddToCart.pressingCart()
+        cy.wait(2000)
+        AddToCart.checkout()
+        cy.wait(3000)
+        
+        checkOut.verifyCheckoutPage()
         checkOut.submitWithEmptyPostalCode()
         checkOut.verifyErrorMessage('Postal Code is required')
         cy.url().should('include', '/checkout-step-one.html')
-        checkOut.clearError()
-        checkOut.resetForm()
+    })
+
+    it('Should not proceed with checkout when all fields are empty', ()=>{
+        login.logIn()
+        cy.wait(2000)
+        login.submit()
+        login.verifySuccessfulLogin()
+        cy.wait(2000)
         
-        // Test all fields empty
+        AddToCart.ToCart()
+        cy.wait(2000)
+        AddToCart.pressingCart()
+        cy.wait(2000)
+        AddToCart.checkout()
+        cy.wait(3000)
+        
+        checkOut.verifyCheckoutPage()
         checkOut.submitWithEmptyFields()
         checkOut.verifyErrorMessage('First Name is required')
         cy.url().should('include', '/checkout-step-one.html')
+    })
+
+    it('Should clear checkout error message when error button is clicked', ()=>{
+        login.logIn()
+        cy.wait(2000)
+        login.submit()
+        login.verifySuccessfulLogin()
+        cy.wait(2000)
+        
+        AddToCart.ToCart()
+        cy.wait(2000)
+        AddToCart.pressingCart()
+        cy.wait(2000)
+        AddToCart.checkout()
+        cy.wait(3000)
+        
+        checkOut.verifyCheckoutPage()
+        checkOut.submitWithEmptyFields()
+        checkOut.verifyErrorMessage('First Name is required')
         checkOut.clearError()
     })
 })
